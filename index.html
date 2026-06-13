@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Other Concepts During Labor and Birth | MCN Comprehensive Review</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        .transition-all { transition: all 0.3s ease; }
+        .recall-mode .reveal-text {
+            background-color: #cbd5e1;
+            color: transparent;
+            border-radius: 0.375rem;
+            padding: 0 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            box-shadow: inset 0 0 0 1px #94a3b8;
+        }
+        .recall-mode .reveal-text:hover,
+        .recall-mode .reveal-text.revealed {
+            background-color: #fbcfe8;
+            color: #1e293b;
+            box-shadow: none;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #db2777; border-radius: 8px; }
+        .content-section { animation: fade 0.3s ease; }
+        @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .quiz-feedback-correct { background-color: #dcfce7; border-left: 4px solid #22c55e; }
+        .quiz-feedback-wrong { background-color: #fee2e2; border-left: 4px solid #ef4444; }
+        .locked-section { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { intrapartum: { light: '#fdf2f8', DEFAULT: '#db2777', dark: '#9d174d' } } } }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 h-screen flex flex-col md:flex-row font-sans text-slate-800 overflow-hidden">
+
+    <!-- Mobile Header -->
+    <div class="md:hidden bg-intrapartum-dark text-white p-4 flex justify-between items-center shadow-md z-30 shrink-0">
+        <button onclick="toggleMobileMenu()" class="text-white focus:outline-none z-40">
+            <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+        <h1 class="font-bold text-lg absolute left-1/2 transform -translate-x-1/2 pointer-events-none">
+            <i class="fa-solid fa-baby-carriage mr-2"></i> Other Labor Concepts
+        </h1>
+        <div class="w-8"></div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar" class="hidden md:flex flex-col w-full md:w-80 bg-white shadow-2xl h-full absolute md:relative z-30 transition-transform duration-300 shrink-0 border-r border-slate-200">
+        <div class="p-6 bg-gradient-to-br from-intrapartum-dark to-intrapartum text-white hidden md:block shrink-0">
+            <h1 class="font-black text-2xl tracking-wide"><i class="fa-solid fa-hand-holding-medical mr-2"></i> Other Labor Concepts</h1>
+            <p class="text-sm text-pink-200 mt-1 font-medium">Intrapartum Review · Emergencies · Procedures</p>
+        </div>
+        <div class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 text-sm font-medium">
+                <li><button onclick="showSection('home')" id="btn-home" class="nav-btn w-full text-left px-6 py-3 bg-intrapartum-light text-intrapartum-dark border-r-4 border-intrapartum-dark transition-colors"><i class="fa-solid fa-house w-6 nav-icon"></i><i class="fa-solid fa-lock w-6 hidden"></i> Home / Start</button></li>
+                <li><button onclick="showSection('abnormal')" id="btn-abnormal" class="nav-btn w-full text-left px-6 py-3 text-slate-600 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-triangle-exclamation w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Abnormal Labor (Dystocia)</button></li>
+                <li><button onclick="showSection('emergencies')" id="btn-emergencies" class="nav-btn w-full text-left px-6 py-3 text-slate-600 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-truck-medical w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Obstetrical Emergencies</button></li>
+                <li><button onclick="showSection('procedures')" id="btn-procedures" class="nav-btn w-full text-left px-6 py-3 text-slate-600 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-syringe w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Intrapartum Procedures & Interventions</button></li>
+                <li><button onclick="showSection('fetalmonitoring')" id="btn-fetalmonitoring" class="nav-btn w-full text-left px-6 py-3 text-slate-600 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-heartbeat w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Fetal Monitoring & Distress</button></li>
+                <li><button onclick="showSection('resuscitation')" id="btn-resuscitation" class="nav-btn w-full text-left px-6 py-3 text-slate-600 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-lungs w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Newborn Resuscitation & Immediate Care</button></li>
+                <li><button onclick="showSection('mnemonics')" id="btn-mnemonics" class="nav-btn w-full text-left px-6 py-3 text-slate-600 hover:bg-slate-50 transition-colors border-t border-slate-200 mt-2 locked-section"><i class="fa-solid fa-brain w-6 text-intrapartum nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Mnemonics & Key Pearls</button></li>
+                <li><button onclick="showSection('final_quiz_sec')" id="btn-final_quiz_sec" class="nav-btn w-full text-left px-6 py-3 text-slate-600 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-graduation-cap w-6 text-amber-500 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Final 50‑Item Exam</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="flex-1 h-full overflow-y-auto bg-slate-100 relative w-full">
+        <div class="fixed top-16 md:top-4 right-4 md:right-8 z-40 flex items-center bg-white/90 backdrop-blur px-4 py-3 rounded-full shadow-lg border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors" onclick="toggleRecallMode()">
+            <span class="mr-3 text-sm font-bold text-slate-700 hidden md:inline"><i class="fa-solid fa-brain text-intrapartum mr-1"></i> Active Recall</span>
+            <button id="recall-toggle" class="w-12 h-6 bg-slate-300 rounded-full relative transition-colors duration-300 focus:outline-none shadow-inner pointer-events-none">
+                <div id="recall-knob" class="w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 transition-transform duration-300 shadow"></div>
+            </button>
+        </div>
+
+        <div class="p-4 md:p-8 max-w-6xl mx-auto pb-32">
+            <!-- HOME SECTION -->
+            <section id="home" class="content-section flex flex-col items-center justify-center min-h-[80vh] text-center block">
+                <div class="bg-gradient-to-br from-slate-800 to-intrapartum-dark text-white rounded-3xl shadow-2xl p-10 md:p-16 w-full relative overflow-hidden">
+                    <div class="absolute top-0 right-0 -mt-10 -mr-10 text-white opacity-5 pointer-events-none"><i class="fa-solid fa-kit-medical text-[20rem]"></i></div>
+                    <div class="relative z-10">
+                        <div class="bg-white/10 backdrop-blur-sm inline-block p-4 rounded-full text-pink-300 mb-6 shadow-sm border border-white/20">
+                            <i class="fa-solid fa-book-medical text-5xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-300 mb-2 uppercase tracking-widest">Maternal & Child Health Nursing</h3>
+                        <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight drop-shadow-md">Other Concepts During<br>Labor and Birth</h1>
+                        <div class="bg-white/10 backdrop-blur inline-block px-6 py-3 rounded-full mb-10 border border-white/20">
+                            <p class="text-lg text-white font-medium">Comprehensive Intrapartum Review | <strong>Adele Pillitteri</strong> | Evidence‑Based</p>
+                        </div>
+                        <button onclick="unlockFirstSection()" class="bg-slate-600 hover:bg-slate-500 text-white font-black py-4 px-10 rounded-full shadow-xl transition-transform hover:scale-105 text-lg flex items-center mx-auto focus:outline-none">
+                            Begin Module <i class="fa-solid fa-arrow-right ml-3"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 1. ABNORMAL LABOR (DYSTOCIA) -->
+            <section id="abnormal" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4 border-b-2 border-intrapartum pb-3"><i class="fa-solid fa-triangle-exclamation text-intrapartum mr-4"></i> Abnormal Labor (Dystocia)</h2>
+                    <p><strong>Dystocia</strong> = difficult or abnormal labor. Classified as <span class="reveal-text font-bold">protraction (slower than normal)</span> or <span class="reveal-text font-bold">arrest (complete cessation)</span> of cervical dilation or fetal descent[reference:0].</p>
+                    <div class="grid md:grid-cols-2 gap-5 mt-4">
+                        <div class="bg-red-50 p-4 rounded-xl"><strong>⏳ Protraction Disorders</strong><br>• Latent phase: nullipara >20 hr, multipara >14 hr[reference:1]<br>• Active phase: <1 cm/hr nullipara, <1.5 cm/hr multipara[reference:2]<br>• Second stage: >1 hr no descent</div>
+                        <div class="bg-amber-50 p-4 rounded-xl"><strong>⛔ Arrest Disorders</strong><br>• No cervical change for ≥4 hr with adequate contractions[reference:3]<br>• Second stage arrest: nullipara >3 hr, multipara >2 hr (without epidural)<br>• Third stage: retained placenta >30 min[reference:4]</div>
+                    </div>
+                    <div class="bg-slate-100 p-3 rounded-lg mt-4"><i class="fa-regular fa-lightbulb"></i> <strong>Causes: "3 P's"</strong> – <span class="reveal-text">Power (inadequate contractions), Passenger (fetal malposition, macrosomia), Passage (CPD, non-gynecoid pelvis)</span>[reference:5].</div>
+                    <button onclick="openQuiz('abnormal')" class="mt-6 w-full bg-slate-800 text-white font-black py-3 rounded-xl">Take Quiz → Unlock Next</button>
+                </div>
+            </section>
+
+            <!-- 2. OBSTETRICAL EMERGENCIES -->
+            <section id="emergencies" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4 border-b-2 border-intrapartum pb-3"><i class="fa-solid fa-truck-medical text-intrapartum mr-4"></i> Obstetrical Emergencies</h2>
+                    <p>Emergencies can occur without warning. The nurse must recognize risk factors and act immediately[reference:6].</p>
+                    <div class="grid md:grid-cols-2 gap-5 mt-3">
+                        <div><strong>🫂 Shoulder Dystocia</strong><br>• Impaction of anterior shoulder behind pubic symphysis (<3% births)[reference:7]<br>• Risks: macrosomia, diabetes, obesity, multiparity[reference:8]<br>• <span class="reveal-text">Nursing actions: McRoberts maneuver, suprapubic pressure, hands‑and‑knees position; prepare for neonatal resuscitation</span>[reference:9].</div>
+                        <div><strong>🎗️ Prolapsed Umbilical Cord</strong><br>• Cord lies below presenting part → compression → fetal hypoxia[reference:10]<br>• <span class="reveal-text">Actions: knee‑chest/Trendelenburg, manually elevate presenting part off cord, cover cord with moist sterile saline, prepare for immediate cesarean</span>.</div>
+                        <div><strong>💔 Uterine Rupture</strong><br>• Complete tearing of uterine wall (≥1% after classical cesarean scar)[reference:11]<br>• <span class="reveal-text">Signs: sudden cessation of contractions, fetal bradycardia, maternal shock; emergency laparotomy</span>.</div>
+                        <div><strong>🌊 Amniotic Fluid Embolism (AFE)</strong><br>• Amniotic fluid enters maternal circulation → anaphylactoid reaction[reference:12]<br>• <span class="reveal-text">Signs: sudden dyspnea, cyanosis, hypotension, DIC; immediate CPR and supportive care</span>.</div>
+                        <div><strong>🩸 Postpartum Hemorrhage (PPH)</strong><br>• Blood loss >500 mL vaginal, >1000 mL cesarean. Causes: <span class="reveal-text">Tone (atony), Tissue (retained), Trauma (lacerations), Thrombin (coagulopathy)</span>[reference:13].<br>• <span class="reveal-text">Actions: fundal massage, oxytocin, bimanual compression, prepare for blood transfusion</span>.</div>
+                        <div><strong>🦷 HELLP Syndrome / Eclampsia</strong><br>• Seizures in preeclamptic patient[reference:14].<br>• <span class="reveal-text">Actions: left lateral position, airway protection, magnesium sulfate, prevent injury, prepare for delivery</span>.</div>
+                    </div>
+                    <button onclick="openQuiz('emergencies')" class="mt-6 w-full bg-slate-800 text-white font-black py-3 rounded-xl">Take Quiz → Unlock Next</button>
+                </div>
+            </section>
+
+            <!-- 3. INTRAPARTUM PROCEDURES & INTERVENTIONS -->
+            <section id="procedures" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4 border-b-2 border-intrapartum pb-3"><i class="fa-solid fa-syringe text-intrapartum mr-4"></i> Intrapartum Procedures & Interventions</h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div><strong>💧 Amniotomy (AROM)</strong><br><span class="reveal-text">Artificial rupture of membranes to induce or augment labor. Risks: cord prolapse, infection. Assess FHR before and after; note color/odor of fluid</span>[reference:15].</div>
+                        <div><strong>💧 Amnioinfusion</strong><br><span class="reveal-text">Infusion of warmed saline into uterus to relieve cord compression (variable decelerations) or dilute meconium. Monitor for uterine overdistension</span>[reference:16].</div>
+                        <div><strong>🍼 Induction of Labor</strong><br><span class="reveal-text">Stimulation of contractions before spontaneous onset. Methods: oxytocin, prostaglandins (PGE2), mechanical (cervical ripening balloon). Bishop score ≥6 favorable[reference:17].</div>
+                        <div><strong>⚡ Augmentation of Labor</strong><br><span class="reveal-text">Strengthening already established but inadequate contractions (hypotonic). Administer oxytocin per protocol; monitor for hyperstimulation[reference:18].</div>
+                        <div><strong>🪖 Vacuum-Assisted Delivery</strong><br><span class="reveal-text">Soft cup applied to fetal head for traction; second stage prolonged. Nursing: assist positioning, document cup placement, monitor for caput/cephalohematoma.</div>
+                        <div><strong>🦯 Forceps-Assisted Delivery</strong><br><span class="reveal-text">Metal instruments to rotate or extract fetus. Higher risk of perineal lacerations and facial nerve injury; prepare for repair and neonatal assessment.</div>
+                        <div><strong>✂️ Episiotomy & Perineal Repair</strong><br><span class="reveal-text">Surgical incision to enlarge vaginal outlet (midline or mediolateral). Nursing: ice packs, perineal care, pain management, monitor for hematoma/infection.</div>
+                        <div><strong>🤰 Cesarean Birth (C‑section)</strong><br><span class="reveal-text">Surgical delivery through abdominal/uterine incisions. Indications: CPD, malpresentation, fetal distress, prior classical incision. Nursing: pre‑op preparation, post‑op fundal checks, pain control, VTE prophylaxis.</div>
+                    </div>
+                    <button onclick="openQuiz('procedures')" class="mt-6 w-full bg-slate-800 text-white font-black py-3 rounded-xl">Take Quiz → Unlock Next</button>
+                </div>
+            </section>
+
+            <!-- 4. FETAL MONITORING & DISTRESS -->
+            <section id="fetalmonitoring" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4 border-b-2 border-intrapartum pb-3"><i class="fa-solid fa-heartbeat text-intrapartum mr-4"></i> Fetal Monitoring & Distress</h2>
+                    <p><strong>Fetal distress</strong> is most often diagnosed by abnormal FHR patterns. Three‑tiered system (Category I, II, III) guides management[reference:19].</p>
+                    <div class="overflow-x-auto mt-3">
+                        <table class="w-full text-sm border">
+                            <thead class="bg-intrapartum text-white"><tr><th class="p-2">Category</th><th class="p-2">Definition</th><th class="p-2">Action</th></tr></thead>
+                            <tbody>
+                                <tr><td class="border p-2 bg-green-100">I</td><td class="border p-2 reveal-text">Normal tracing: baseline 110–160, moderate variability, no late/variable decels, accelerations present or absent</td><td class="border p-2">Routine monitoring; reassure</td></tr>
+                                <tr class="bg-slate-50"><td class="border p-2 bg-yellow-100">II</td><td class="border p-2 reveal-text">Indeterminate: bradycardia not meeting criteria, minimal variability, variable decelerations without specific characteristics, tachycardia</td><td class="border p-2">Interventions (reposition, IV fluids, O₂, reduce contractions)</td></tr>
+                                <tr><td class="border p-2 bg-red-100">III</td><td class="border p-2 reveal-text">Absent baseline variability with recurrent late/variable decels, bradycardia, or sinusoidal pattern. Indicates fetal acidemia.</td><td class="border p-2">Notify provider, prepare for immediate delivery (within 30 min)[reference:20]</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-amber-50 p-3 rounded-lg mt-4"><i class="fa-regular fa-message"></i> <strong>VEAL CHOP mnemonic:</strong> <span class="reveal-text">Variable decels → Cord compression; Early decels → Head compression; Accelerations → Okay; Late decels → Placental insufficiency</span>.</div>
+                    <button onclick="openQuiz('fetalmonitoring')" class="mt-6 w-full bg-slate-800 text-white font-black py-3 rounded-xl">Take Quiz → Unlock Next</button>
+                </div>
+            </section>
+
+            <!-- 5. NEWBORN RESUSCITATION & IMMEDIATE CARE -->
+            <section id="resuscitation" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4 border-b-2 border-intrapartum pb-3"><i class="fa-solid fa-lungs text-intrapartum mr-4"></i> Newborn Resuscitation & Immediate Care</h2>
+                    <p>Approximately 10% of newborns require some assistance, 1% need extensive resuscitation. The <strong>NRP (Neonatal Resuscitation Program)</strong> algorithm is standard.</p>
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div><strong>🔄 Steps of Resuscitation (Golden Minute)</strong><br><span class="reveal-text">1. Warmth, dry, stimulate; 2. Position airway, suction if needed; 3. Apneic/gasping → positive‑pressure ventilation (PPV); 4. HR <60 → chest compressions + PPV; 5. Epinephrine if HR remains <60 after 60 sec of compressions.</span></div>
+                        <div><strong>📏 APGAR Scoring</strong><br><span class="reveal-text">Assessed at 1 and 5 minutes; if low, repeat every 5 min. Score <4 = severe depression; 4–6 = moderate; 7–10 = good adaptation.</span></div>
+                        <div><strong>❄️ Thermoregulation</strong><br><span class="reveal-text">Prevent hypothermia: dry immediately, radiant warmer, skin‑to‑skin contact, warm blankets. Cold stress increases oxygen consumption and metabolic acidosis.</span></div>
+                        <div><strong>💊 Prophylaxis</strong><br><span class="reveal-text">Vitamin K IM (hemorrhagic disease prevention), erythromycin ointment (ophthalmia neonatorum), Hepatitis B vaccine within 12 hours.</span></div>
+                    </div>
+                    <div class="bg-intrapartum-light p-3 rounded-lg mt-4"><i class="fa-regular fa-clock"></i> <strong>Key point:</strong> <span class="reveal-text">The "Golden Minute" — first 60 seconds to evaluate and initiate resuscitation if needed. Initial steps (warm, dry, stimulate) are critical for spontaneous breathing.</span></div>
+                    <button onclick="openQuiz('resuscitation')" class="mt-6 w-full bg-slate-800 text-white font-black py-3 rounded-xl">Take Quiz → Unlock Next</button>
+                </div>
+            </section>
+
+            <!-- 6. MNEMONICS & KEY PEARLS -->
+            <section id="mnemonics" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4 border-b-2 border-intrapartum pb-3"><i class="fa-solid fa-brain text-intrapartum mr-4"></i> Mnemonics & Key Pearls</h2>
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div class="bg-pink-50 p-4 rounded-xl"><strong class="text-pink-800">🔁 VEAL CHOP (FHR patterns)</strong><br><span class="reveal-text">Variable = Cord compression; Early = Head compression; Accelerations = Okay; Late = Placental insufficiency</span></div>
+                        <div class="bg-pink-50 p-4 rounded-xl"><strong class="text-pink-800">🩸 PPH causes (4 T's)</strong><br><span class="reveal-text">Tone (atony), Tissue (retained), Trauma (lacerations), Thrombin (coagulopathy)</span></div>
+                        <div class="bg-pink-50 p-4 rounded-xl"><strong class="text-pink-800">🆘 Shoulder Dystocia maneuvers (HELPERR)</strong><br><span class="reveal-text">H – help, E – evaluate for episiotomy, L – legs (McRoberts), P – suprapubic pressure, E – enter (internal rotation), R – remove posterior arm, R – roll (all‑fours)</span></div>
+                        <div class="bg-pink-50 p-4 rounded-xl"><strong class="text-pink-800">📏 Bishop Score (pre‑induction)</strong><br><span class="reveal-text">Dilation, Effacement, Station, Consistency, Position. Score ≥6 favorable, <6 unfavorable (cervical ripening needed)</span></div>
+                        <div class="bg-pink-50 p-4 rounded-xl"><strong class="text-pink-800">💊 NRP Resuscitation (MR. SOPA)</strong><br><span class="reveal-text">Mask adjustment, Reposition airway, Suction, Open mouth, Pressure increase, Airway alternative</span></div>
+                        <div class="bg-pink-50 p-4 rounded-xl"><strong class="text-pink-800">⚠️ TORCH + (infections causing hydrops)</strong><br><span class="reveal-text">Toxoplasmosis, Other (syphilis, HIV), Rubella, CMV, Herpes, Parvovirus B19</span></div>
+                    </div>
+                    <button onclick="openQuiz('mnemonics')" class="mt-6 w-full bg-slate-800 text-white font-black py-3 rounded-xl">Take Quiz → Unlock Final Exam</button>
+                </div>
+            </section>
+
+            <!-- FINAL EXAM SECTION -->
+            <section id="final_quiz_sec" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 text-center min-h-[60vh] flex flex-col justify-center items-center">
+                    <i class="fa-solid fa-graduation-cap text-8xl text-amber-500 mb-6"></i>
+                    <h2 class="text-4xl font-black text-slate-800 mb-4">Final 50‑Item Exam</h2>
+                    <p class="text-lg text-slate-600 mb-8 max-w-2xl">Covers dystocia, emergencies, procedures, fetal monitoring, newborn resuscitation, and mnemonics. Score ≥75% to pass.</p>
+                    <button onclick="openQuiz('final_quiz')" class="w-full max-w-md bg-slate-800 text-white font-black py-4 rounded-xl shadow-md text-xl">Start Final Exam</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- QUIZ MODAL -->
+    <div id="quiz-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/80 backdrop-blur-sm p-4">
+        <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl p-6 md:p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeQuiz()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            <h2 id="quiz-title" class="text-3xl font-black text-slate-800 mb-2"></h2>
+            <div id="quiz-questions-container" class="space-y-4 mt-4"></div>
+            <button id="quiz-submit-btn" onclick="submitQuiz()" class="mt-8 w-full bg-intrapartum text-white font-bold py-4 rounded-xl shadow-lg">Submit Answers</button>
+            <div id="quiz-result-container" class="hidden mt-6 p-4 rounded-xl bg-slate-100"></div>
+        </div>
+    </div>
+
+    <script>
+        let unlockedSections = ['home'];
+        // QUIZZES (10 questions each)
+        const quizzes = {
+            abnormal: { title: "Abnormal Labor (Dystocia)", next: "emergencies", questions: [
+                { q: "Prolonged latent phase in nullipara is defined as >", options: ["12 hours", "16 hours", "20 hours", "24 hours"], ans: 2 },
+                { q: "Active phase arrest in nullipara is defined as no cervical change for ≥4 hours with:", options: ["Mild contractions", "Adequate contractions", "No epidural", "Fetal distress"], ans: 1 },
+                { q: "Retained placenta >30 minutes after birth defines:", options: ["Normal third stage", "Prolonged third stage", "Precipitous labor", "Uterine atony"], ans: 1 },
+                { q: "The 3 P's of labor that cause dystocia are:", options: ["Pain, Position, Psyche", "Powers, Passenger, Passage", "Placenta, Prep, Pushing", "Pain, Prematurity, PROM"], ans: 1 },
+                { q: "A multipara with an epidural has a second stage arrest if >", options: ["2 hours", "3 hours", "4 hours", "5 hours"], ans: 1 },
+                { q: "Protraction disorders mean:", options: ["Labor stops completely", "Labor progresses but slower than normal", "Labor is precipitous", "Only latent phase is affected"], ans: 1 },
+                { q: "Which of the following is a risk factor for dystocia?", options: ["Gynecoid pelvis", "Fetal macrosomia", "Multiparity", "Maternal age <25"], ans: 1 },
+                { q: "Cephalopelvic disproportion (CPD) represents a problem with which 'P'?", options: ["Power", "Passage", "Passenger", "Psyche"], ans: 1 },
+                { q: "Arrest of descent in second stage for nullipara without epidural is >", options: ["1 hour", "2 hours", "3 hours", "4 hours"], ans: 2 },
+                { q: "The most common cause of prolonged active phase is:", options: ["Uterine hypertonus", "Inadequate uterine contractions", "Fetal malpresentation", "Maternal exhaustion"], ans: 1 }
+            ]},
+            emergencies: { title: "Obstetrical Emergencies", next: "procedures", questions: [
+                { q: "The first maneuver for shoulder dystocia is:", options: ["Episiotomy", "McRoberts maneuver (hyperflexion of hips)", "Vacuum extraction", "Cesarean section"], ans: 1 },
+                { q: "After cord prolapse, the nurse's priority action is:", options: ["Administer oxygen", "Place mother in knee‑chest or Trendelenburg", "Start oxytocin", "Increase IV fluids"], ans: 1 },
+                { q: "Signs of uterine rupture include:", options: ["Sudden cessation of contractions and fetal bradycardia", "Increased contraction frequency", "Maternal fever", "Bloody show"], ans: 0 },
+                { q: "Amniotic fluid embolism (AFE) is characterized by:", options: ["Hypertension", "Sudden dyspnea, hypotension, and DIC", "Painless bleeding", "Prolonged labor"], ans: 1 },
+                { q: "The most common cause of postpartum hemorrhage is:", options: ["Uterine atony", "Lacerations", "Retained placenta", "Coagulopathy"], ans: 0 },
+                { q: "Which of the following is NOT a risk factor for shoulder dystocia?", options: ["Maternal diabetes", "Fetal macrosomia", "Obesity", "Nulliparity"], ans: 3 },
+                { q: "Nursing action for a Category III FHR tracing includes:", options: ["Continue routine monitoring", "Prepare for immediate delivery within 30 minutes", "Decrease IV fluids", "Change to supine position"], ans: 1 },
+                { q: "HELLP syndrome is a complication of:", options: ["Preeclampsia/eclampsia", "Placenta previa", "Shoulder dystocia", "Cord prolapse"], ans: 0 },
+                { q: "In a prolapsed cord, the nurse should:", options: ["Push the cord back into the uterus", "Cover cord with moist sterile saline and elevate presenting part", "Apply fundal pressure", "Immediately administer oxygen"], ans: 1 },
+                { q: "If the anterior shoulder is impacted, which secondary maneuver is used after McRoberts?", options: ["Fundal pressure", "Suprapubic pressure", "Episiotomy alone", "Pitocin bolus"], ans: 1 }
+            ]},
+            procedures: { title: "Intrapartum Procedures", next: "fetalmonitoring", questions: [
+                { q: "Amniotomy is performed to:", options: ["Relieve cord compression", "Induce or augment labor", "Stop contractions", "Treat postpartum hemorrhage"], ans: 1 },
+                { q: "Amnioinfusion is indicated for:", options: ["Oligohydramnios with variable decelerations", "Polyhydramnios", "Fetal tachycardia", "Shoulder dystocia"], ans: 0 },
+                { q: "A Bishop score ≥6 indicates:", options: ["Cervix unfavorable for induction", "Cervix favorable for induction", "Need for cesarean", "Fetal distress"], ans: 1 },
+                { q: "Oxytocin augmentation is used when:", options: ["Contractions are hypertonic", "Contractions are inadequate (hypotonic)", "Cervix is already 10 cm", "Fetus is in transverse lie"], ans: 1 },
+                { q: "Potential complication of vacuum‑assisted delivery is:", options: ["Cephalohematoma or caput succedaneum", "Uterine rupture", "Maternal fever", "Amniotic fluid embolism"], ans: 0 },
+                { q: "Which of the following is a contraindication to forceps delivery?", options: ["Second stage prolongation", "Fetal malposition", "Complete cervical dilation", "Unexplained fetal distress"], ans: 1 },
+                { q: "Mediolateral episiotomy is preferred over midline because:", options: ["Less blood loss", "Lower risk of extension into rectum (third/fourth degree)", "Faster healing", "Less pain"], ans: 1 },
+                { q: "Post‑cesarean nursing care includes:", options: ["Fundal massage (but gentle over incision)", "Strict bed rest for 24 hours", "No oral intake for 48 hours", "Discourage breastfeeding"], ans: 0 },
+                { q: "The primary risk of amniotomy is:", options: ["Maternal hypertension", "Cord prolapse and infection", "Uterine atony", "Fetal macrosomia"], ans: 1 },
+                { q: "Cervical ripening can be achieved with:", options: ["Misoprostol (PGE1) or dinoprostone (PGE2)", "Oxytocin only", "Magnesium sulfate", "Betamethasone"], ans: 0 }
+            ]},
+            fetalmonitoring: { title: "Fetal Monitoring & Distress", next: "resuscitation", questions: [
+                { q: "Category I FHR tracing requires:", options: ["Immediate delivery", "Routine monitoring", "Scalp pH", "IV fluids"], ans: 1 },
+                { q: "Late decelerations are caused by:", options: ["Cord compression", "Uteroplacental insufficiency", "Head compression", "Fetal movement"], ans: 1 },
+                { q: "Variable decelerations are associated with:", options: ["Placental insufficiency", "Cord compression", "Head compression", "Maternal fever"], ans: 1 },
+                { q: "Moderate variability (6–25 bpm) indicates:", options: ["Fetal acidemia", "Normal fetal oxygenation", "Sleep cycle", "Uteroplacental insufficiency"], ans: 1 },
+                { q: "The mnemonic VEAL CHOP matches 'L' (late decels) with:", options: ["Cord compression", "Placental insufficiency", "Head compression", "Okay"], ans: 1 },
+                { q: "Category III tracing requires:", options: ["Document and continue routine", "Notify provider and prepare for delivery within 30 min", "Decrease oxytocin only", "Change maternal position"], ans: 1 },
+                { q: "Accelerations in FHR indicate:", options: ["Fetal hypoxia", "Fetal well‑being and adequate oxygenation", "Cord compression", "Preterm labor"], ans: 1 },
+                { q: "Prolonged deceleration lasts:", options: [">1 minute but <2 minutes", ">2 minutes but <10 minutes", ">10 minutes", "<30 seconds"], ans: 1 },
+                { q: "Baseline FHR >160 bpm is termed:", options: ["Bradycardia", "Tachycardia", "Normal", "Variable"], ans: 1 },
+                { q: "Interventions for Category II tracing include:", options: ["Immediate cesarean", "Reposition, IV fluids, reduce contractions", "Apply fundal pressure", "Increase oxytocin"], ans: 1 }
+            ]},
+            resuscitation: { title: "Newborn Resuscitation", next: "mnemonics", questions: [
+                { q: "The 'Golden Minute' refers to:", options: ["First minute after birth to evaluate and initiate resuscitation", "Time to clamp the cord", "Skin‑to‑skin contact period", "APGAR scoring window"], ans: 0 },
+                { q: "If a newborn is apneic after initial steps, the next action is:", options: ["Chest compressions", "Positive‑pressure ventilation (PPV)", "Epinephrine", "Intubation"], ans: 1 },
+                { q: "Chest compressions are indicated when HR is:", options: ["<100 bpm", "<80 bpm", "<60 bpm despite 30 sec of PPV", "<40 bpm"], ans: 2 },
+                { q: "The ratio of chest compressions to ventilation in newborn is:", options: ["3:1", "5:1", "15:2", "30:2"], ans: 0 },
+                { q: "APGAR score at 1 minute is 3. This indicates:", options: ["Mild depression", "Moderate depression", "Severe depression", "Normal adaptation"], ans: 2 },
+                { q: "Vitamin K is given IM to prevent:", options: ["Infection", "Hemorrhagic disease of newborn", "Hypoglycemia", "Hyperbilirubinemia"], ans: 1 },
+                { q: "Cold stress in newborn leads to:", options: ["Decreased oxygen consumption", "Increased metabolic acidosis and oxygen demand", "Increased surfactant production", "Improved thermoregulation"], ans: 1 },
+                { q: "The initial step in newborn resuscitation is:", options: ["Oxygen by mask", "Suction and intubation", "Warm, dry, stimulate and position airway", "Chest compressions"], ans: 2 },
+                { q: "If the newborn has meconium staining and is not vigorous, the nurse should:", options: ["Immediately intubate and suction", "Dry and stimulate only", "Start PPV", "Administer naloxone"], ans: 0 },
+                { q: "Epinephrine is given during resuscitation when:", options: ["HR <60 after 60 sec of compressions and PPV", "APGAR <5 at 5 minutes", "Cyanosis persists", "Newborn is floppy"], ans: 0 }
+            ]},
+            mnemonics: { title: "Mnemonics & Pearls", next: "final_quiz_sec", questions: [
+                { q: "In VEAL CHOP mnemonic, 'C' stands for:", options: ["Cord compression (variable decels)", "Cerebral damage", "Cardiac anomaly", "Cesarean"], ans: 0 },
+                { q: "The 4 T's of postpartum hemorrhage include all EXCEPT:", options: ["Tone", "Trauma", "Thrombin", "Toxemia"], ans: 3 },
+                { q: "HELPERR mnemonic is used for:", options: ["Prolonged labor", "Shoulder dystocia", "Cord prolapse", "PPH"], ans: 1 },
+                { q: "Bishop score evaluates:", options: ["Fetal pH", "Cervical readiness for induction", "Newborn APGAR", "Contraction intensity"], ans: 1 },
+                { q: "In NRP resuscitation, 'MR. SOPA' addresses:", options: ["Ventilation correction steps", "APGAR scoring", "Medication administration", "Thermoregulation"], ans: 0 },
+                { q: "Which mnemonic helps recall causes of hydrops fetalis due to infection?", options: ["VEAL CHOP", "TORCH plus Parvovirus", "HELPERR", "5 P's"], ans: 1 },
+                { q: "The 'P' in 'MR. SOPA' for mask adjustment stands for:", options: ["Pressure increase", "Position airway", "Perform", "Pulse oximetry"], ans: 0 },
+                { q: "VEAL CHOP 'O' (okay) corresponds to:", options: ["Accelerations", "Variable decelerations", "Late decelerations", "Early decelerations"], ans: 0 },
+                { q: "HELPERR 'L' stands for:", options: ["Lacerations", "Legs (McRoberts)", "Lochia", "Lung maturity"], ans: 1 },
+                { q: "The third 'P' in HELPERR stands for:", options: ["Passage", "Pressure (suprapubic)", "Position", "Placenta"], ans: 1 }
+            ]}
+        };
+        // Build final 50-item exam (mix all sections)
+        let finalQ = [];
+        for(let sec of ['abnormal','emergencies','procedures','fetalmonitoring','resuscitation','mnemonics']) {
+            finalQ.push(...quizzes[sec].questions.slice(0,8));
+        }
+        while(finalQ.length < 50) finalQ.push({ q: "The initial nursing action for a Category III fetal heart rate tracing is:", options: ["Increase oxytocin", "Notify provider and prepare for immediate delivery", "Administer oxygen and reposition", "Check maternal blood pressure"], ans: 1 });
+        quizzes.final_quiz = { title: "Final 50‑Item Exam: Other Labor Concepts", next: null, questions: finalQ };
+
+        let currentQuiz = null;
+
+        function unlockFirstSection() { if(!unlockedSections.includes('abnormal')) { unlockedSections.push('abnormal'); updateSidebarUI(); } showSection('abnormal'); }
+        function showSection(sectionId) {
+            if (!unlockedSections.includes(sectionId) && sectionId !== 'home') { alert("Complete the Active Recall Quiz at the bottom of the previous section to unlock."); return; }
+            document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(sectionId)?.classList.remove('hidden');
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('bg-intrapartum-light','text-intrapartum-dark','border-r-4','border-intrapartum-dark'));
+            const activeBtn = document.getElementById('btn-'+sectionId);
+            if(activeBtn) activeBtn.classList.add('bg-intrapartum-light','text-intrapartum-dark','border-r-4','border-intrapartum-dark');
+            if(window.innerWidth < 768) document.getElementById('sidebar').classList.add('hidden');
+        }
+        function updateSidebarUI() {
+            const sections = ['home','abnormal','emergencies','procedures','fetalmonitoring','resuscitation','mnemonics','final_quiz_sec'];
+            sections.forEach(sec => {
+                const btn = document.getElementById('btn-'+sec);
+                if(!btn) return;
+                const lock = btn.querySelector('.fa-lock'), icon = btn.querySelector('.nav-icon');
+                if(unlockedSections.includes(sec) || sec==='home') { btn.classList.remove('locked-section'); if(lock) lock.classList.add('hidden'); if(icon) icon.classList.remove('hidden'); }
+                else { btn.classList.add('locked-section'); if(lock) lock.classList.remove('hidden'); if(icon) icon.classList.add('hidden'); }
+            });
+        }
+        function openQuiz(sectionId) { currentQuiz = sectionId; const qd = quizzes[sectionId]; if(!qd) return; document.getElementById('quiz-title').innerHTML = qd.title; const container = document.getElementById('quiz-questions-container'); container.innerHTML = ''; qd.questions.forEach((q, idx) => { let html = `<div class="bg-slate-50 p-4 rounded-xl mb-4"><p class="font-bold mb-3">${idx+1}. ${q.q}</p><div class="space-y-2">`; q.options.forEach((opt,oi) => { html += `<label class="flex items-center space-x-3 p-2 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="q${idx}" value="${oi}" class="form-radio text-intrapartum"><span>${opt}</span></label>`; }); html += `</div><div class="feedback-${idx} text-sm mt-2 hidden"></div></div>`; container.innerHTML += html; }); document.getElementById('quiz-submit-btn').classList.remove('hidden'); document.getElementById('quiz-result-container').classList.add('hidden'); document.getElementById('quiz-modal').classList.remove('hidden'); }
+        function closeQuiz() { document.getElementById('quiz-modal').classList.add('hidden'); }
+        function submitQuiz() {
+            const qd = quizzes[currentQuiz];
+            if(!qd) return;
+            let score = 0;
+            for(let i=0; i<qd.questions.length; i++) {
+                const sel = document.querySelector(`input[name="q${i}"]:checked`);
+                if(sel && parseInt(sel.value)===qd.questions[i].ans) score++;
+                const fbDiv = document.querySelector(`.feedback-${i}`);
+                if(fbDiv){
+                    fbDiv.classList.remove('hidden');
+                    const correctTxt = qd.questions[i].options[qd.questions[i].ans];
+                    if(sel && parseInt(sel.value)===qd.questions[i].ans) { fbDiv.innerHTML='<span class="text-green-700">✓ Correct</span>'; fbDiv.parentElement?.classList.add('quiz-feedback-correct'); }
+                    else { const selectedTxt = sel? qd.questions[i].options[parseInt(sel.value)]:"No answer"; fbDiv.innerHTML=`<span class="text-red-700">✗ Incorrect. Correct: ${correctTxt}. You answered: ${selectedTxt}</span>`; fbDiv.parentElement?.classList.add('quiz-feedback-wrong'); }
+                }
+            }
+            let percent = (score/qd.questions.length)*100;
+            let resultDiv = document.getElementById('quiz-result-container');
+            document.getElementById('quiz-submit-btn').classList.add('hidden');
+            resultDiv.classList.remove('hidden');
+            if(percent>=75){
+                if(currentQuiz==='final_quiz'){ resultDiv.innerHTML=`<div class="text-green-600 text-4xl text-center">🎉 Excellent! Score ${score}/${qd.questions.length} (${percent}%)<br>You mastered Other Labor Concepts</div><button onclick="closeQuiz()" class="mt-4 bg-intrapartum text-white px-6 py-2 rounded-xl">Close</button>`; return; }
+                if(quizzes[currentQuiz].next && !unlockedSections.includes(quizzes[currentQuiz].next)) unlockedSections.push(quizzes[currentQuiz].next);
+                if(quizzes[currentQuiz].next === 'mnemonics' && !unlockedSections.includes('final_quiz_sec')) unlockedSections.push('final_quiz_sec');
+                updateSidebarUI();
+                resultDiv.innerHTML=`<div class="text-green-600 text-3xl text-center">✅ Passed! (${score}/${qd.questions.length})</div><button onclick="closeQuiz(); showSection('${quizzes[currentQuiz].next}')" class="mt-4 bg-green-600 text-white px-6 py-2 rounded-xl">Unlock Next Section</button>`;
+            } else { resultDiv.innerHTML=`<div class="text-red-600 text-3xl text-center">❌ Failed: ${score}/${qd.questions.length} (${percent}%)<br>Need 75%</div><button onclick="openQuiz('${currentQuiz}')" class="mt-4 bg-slate-600 text-white px-6 py-2 rounded-xl">Try Again</button>`; }
+        }
+        function toggleRecallMode() { const active = !document.body.classList.contains('recall-mode'); const toggle=document.getElementById('recall-toggle'),knob=document.getElementById('recall-knob'); if(active){ document.body.classList.add('recall-mode'); toggle.classList.add('bg-intrapartum-dark'); knob.classList.add('translate-x-6'); } else { document.body.classList.remove('recall-mode'); toggle.classList.remove('bg-intrapartum-dark'); knob.classList.remove('translate-x-6'); } }
+        function toggleMobileMenu() { const s=document.getElementById('sidebar'); if(s.classList.contains('hidden')) s.classList.remove('hidden','flex','absolute','h-full','z-50'); else s.classList.add('hidden'); }
+        document.addEventListener('DOMContentLoaded', () => { updateSidebarUI(); document.querySelectorAll('.reveal-text').forEach(el => el.addEventListener('click', function(){ if(document.body.classList.contains('recall-mode')) this.classList.toggle('revealed'); })); });
+    </script>
+</body>
+</html>
